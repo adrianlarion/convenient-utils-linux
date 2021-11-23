@@ -1,14 +1,21 @@
 #!/bin/bash
 # How much space a user occupies in dir
 
+#COLORS
+green=`tput setaf 2`
+blue=`tput setaf 4`
+bold=`tput bold`
+col_reset=`tput sgr0`
+
 tmp_du_exe=
 help(){
+	echo -e "Show how much space a user's files occupy in a a dir\n"
 	echo -e "Usage: $0  [-u <username>] [-d <dirname>] [-k] [-s]\n"
 	echo -e "Example command: \n'$0 -u someuser -d /home/someuser -s'\n"
 	echo -e "Available options: \n
 		-u  Username for which to calculate space usage. Default current user.
 		-d  Dir to perform analysis. Default '.'
-		-k  Show in Kibibytes without any unit of measure (like 'du'). By default it will show something like '1.5 MiB'
+		-k  Show in Kibibytes without any unit of measure (like 'du') if this option is on. By default this option is OFF and it will show something like '1.5 MiB'
 		-s  Force silent (no verbose). Default OFF.
 		-h  Help
 		" 
@@ -97,11 +104,14 @@ done
 
 # set defaults
 d=${d:=.}
+if [[ $d == '.' ]]; then 
+	d=$(pwd) 
+fi
 u=${u:=$(whoami)}
 
 # show starting message
 if ! [[ $s == 1 ]]; then 
-	echo "Searching files for user '$u' in dir '$(pwd)'. Please wait, this might take a wile ..."
+	echo "Searching files for user ${green}${bold}'$u'${col_reset} in dir ${blue}${bold}'${d}'${col_reset}. Please wait, this might take a wile ..."
 fi
 
 
@@ -120,10 +130,19 @@ if ! [[ $s == 1 ]];then
 echo "DONE! Results below. Next time use '-s' option to get rid of these verbose messages"
 fi
 
+#Empty tput coloring if silent
+if [[ $s == 1 ]]; then
+	green=""
+	blue=""
+	bold=""
+	col_reset=""
+fi
+
+
 # Print human readable
 if ! [[ $k == 1 ]]; then
 	if ! [[ $s == 1 ]]; then echo "---------" ;fi
-	echo  $(convert_to_h $totalkb)
+	echo  "${green}${bold}$(convert_to_h $totalkb)${col_reset}"
 	if ! [[ $s == 1 ]]; then echo "---------" ;fi
 else 
 	echo $totalkb 
