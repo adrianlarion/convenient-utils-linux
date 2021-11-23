@@ -9,15 +9,15 @@ col_reset=`tput sgr0`
 
 tmp_du_exe=
 help(){
-	echo -e "Show how much space a user's files occupy in a a dir\n"
-	echo -e "Usage: $0  [-u <username>] [-d <dirname>] [-k] [-s]\n"
-	echo -e "Example command: \n'$0 -u someuser -d /home/someuser -s'\n"
+	echo -e "\nShow how much space a user's files occupy in a a dir\n"
+	echo -e "Usage: ${0##*/}  [-u <username>] [-d <dirname>] [-k] [-s] [-C] [-h]\n"
+	echo -e "Example command: \n${blue}'${0##*/} -u someuser -d /home/someuser -s'${col_reset}\n"
 	echo -e "Available options: \n
 		-u  Username for which to calculate space usage. Default current user.
 		-d  Dir to perform analysis. Default '.'
 		-k  Show in Kibibytes without any unit of measure (like 'du') if this option is on. By default this option is OFF and it will show something like '1.5 MiB'
 		-s  Force silent (no verbose). Default OFF.
-		-c  Show count of files. Default OFF
+		-C  DON'T show file count.
 		-h  Help
 		" 
 	}
@@ -65,7 +65,7 @@ remove_du_exe(){
 
 
 # Process opts
-while getopts ":u:d:kshc" opts; do
+while getopts ":u:d:kshC" opts; do
 	case "${opts}" in 
 		u)
 			u=${OPTARG}
@@ -90,8 +90,8 @@ while getopts ":u:d:kshc" opts; do
 			help 
 			exit 0
 			;;
-		c)
-			c=1
+		C)
+			C=1
 			;;
 		:)
 			echo "-${OPTARG} requires an argument" >&2; exit 1
@@ -152,7 +152,7 @@ if ! [[ $k == 1 ]]; then
 	#show size
 	echo  "${green}${bold}$(convert_to_h $totalkb)${col_reset}"
 	# show files
-	if [[ $c == 1 ]]; then 
+	if ! [[ $C == 1 ]]; then 
 		echo "${blue}${bold}$totalfiles files${col_reset}"
 	fi
 	if ! [[ $s == 1 ]]; then echo "---------" ;fi
@@ -160,7 +160,7 @@ else
 	#show size
 	echo $totalkb 
 	# show files
-	if [[ $c == 1 ]]; then 
+	if ! [[ $C == 1 ]]; then 
 		echo "$totalfiles files"
 	fi
 fi
