@@ -1,0 +1,3 @@
+#!/bin/bash
+# remove empty line at end
+echo $PATH | xargs -d: -n1 echo | grep -v '^$'
