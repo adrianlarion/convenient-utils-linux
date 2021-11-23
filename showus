@@ -10,18 +10,20 @@ col_reset=`tput sgr0`
 
 tmp_du_exe=
 help(){
-	echo -e "\nShow how much space a user's files occupy in a a dir\n"
-	echo -e "Usage: ${0##*/}  [-u <username>] [-d <dirname>] [-k] [-s] [-C] [-F] [-h]\n"
-	echo -e "\n${blue}'${0##*/} '${col_reset}\n #Show verbose, current dir, current user, including count files and human readable output \n" 
+	echo -e "\nABOUT: showus stands for show User Space or show Usage, as you like"
+	echo -e "\nDESCRIPTION: Show how much space a user's files occupy in a a dir\n"
+	echo -e "USAGE: ${0##*/}  [-u <username>] [-d <dirname>] [-k] [-s] [-C] [-F] [-h]\n"
 
-	echo -e "\n${blue}'${0##*/} -u sshd '${col_reset}\n #Show verbose, current dir, 'sshd'  user, including count files and human readable output \n" 
+	echo -e "\n${blue}'${0##*/} '${col_reset}\n #Show verbose, current dir, current user, including count files and human readable output " 
 
-	echo -e "\n${blue}'for u in root sshd; do ${0##*/} -u $u -d ~; done '${col_reset}\n #Show verbose, in home dir, including count files and human readable output FOR users 'ssh' and 'root'  \n" 
+	echo -e "\n${blue}'${0##*/} -u sshd '${col_reset}\n #Show verbose, current dir, 'sshd'  user, including count files and human readable output " 
+
+	echo -e "\n${blue}'for u in root sshd; do ${0##*/} -u $u -d ~; done '${col_reset}\n #Show verbose, in home dir, including count files and human readable output FOR users 'ssh' and 'root'  " 
 
 
-	echo -e "\n${blue}'${0##*/} -u someuser -d /home/someuser -s'${col_reset}\n #Show for user someuser in dir /home/someuser. Verbose ouptut, including count files.\n" 
-	echo -e "\n${blue}'${0##*/} -sCk'${col_reset}\n # Show for current user, current dir, no count files, no verbose, no KiB/MiB/etc after output\n" 
-	echo -e "\n${blue}'${0##*/} -sd /var/'${col_reset}\n # Show for current user, no verbose, in dir /var\n" 
+	echo -e "\n${blue}'${0##*/} -u someuser -d /home/someuser -s'${col_reset}\n #Show for user someuser in dir /home/someuser. Verbose ouptut, including count files." 
+	echo -e "\n${blue}'${0##*/} -sCk'${col_reset}\n # Show for current user, current dir, no count files, no verbose, no KiB/MiB/etc after output" 
+	echo -e "\n${blue}'${0##*/} -sd /var/'${col_reset}\n # Show for current user, no verbose, in dir /var" 
 	echo -e "\n${blue}'${0##*/} -skC | awk '{print \"raw kibibytes\" \$1}' '${col_reset}\n # Show for current user, no verbose, no count files, in current dir. Pipe the raw kibibytes value to awk\n" 
 
 	echo -e "Available options: \n
