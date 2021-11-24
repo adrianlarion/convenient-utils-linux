@@ -31,6 +31,11 @@ export PATH="~/scripts/convenient-utils-linux:$PATH"
 * Just call the desired utility. The 'show' family start with the keyword 'show' and continue with something relevant.
 * For example to show users type 'showu'. [show][u] - show users, alright?
 * showg - showgroup. showp - showpath. showbf - showbigfiles. showus - show user space. etc
+* Here's a favourite one liner. Show total file size & count for every user in the root dir. 
+<br>
+`for u in $(showu); do showus -u $u -d / ; done`
+![gen usage](./img/showus2.gif)
+
 
 
 
