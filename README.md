@@ -1,5 +1,5 @@
-# Show & Other utilities
-A series of utilities to show various info on Linux systems. 
+# Convenient Utilities Linux
+A series of utilities that make life easier on linux.
 
 # Install
 1. Clone the dir somewhere on your pc.
@@ -36,16 +36,7 @@ A series of utilities to show various info on Linux systems.
 
 # wtw
 * What's the word? A simple one liner (in script) to show possible words for regex.
+![gen usage](./img/wtw_use.gif)
 
-
-
-README.md
-showbf
-showbl
-showg
-showp
-showu
-showus
-wtw
 
 
