@@ -6,11 +6,11 @@ A series of utilities that make life easier on linux.
 ```
 if ! [ -d ~/scripts ] ; then mkdir -p ~/scripts ; fi
 cd ~/scripts
-git clone https://github.com/adrianscheff/show-utils-linux
+git clone https://github.com/adrianscheff/convenient-utils-linux
 ```
 2. Add the dir path to .bashrc (or your terminal startup config file)
 ```
-echo 'export PATH="~/scripts/show-utils-linux:$PATH"' >> ~/.bashrc
+echo 'export PATH="~/scripts/convenient-utils-linux:$PATH"' >> ~/.bashrc
 ```
 3. Reload your terminal.
 ```
@@ -20,11 +20,11 @@ source ~/.bashrc
 # Uninstall
 1. Delete the dir where the downloaded files are.
 ```
-rm ~/scripts/show-utils-linux -r
+rm ~/scripts/convenient-utils-linux -r
 ```
 2. Remove the added line to .bashrc. It should be something like
 ```
-export PATH="~/scripts/show-utils-linux:$PATH"
+export PATH="~/scripts/convenient-utils-linux:$PATH"
 ```
 
 # Use
@@ -44,7 +44,8 @@ export PATH="~/scripts/show-utils-linux:$PATH"
 * Works well with files that have spaces or other "funky" chars. 
 
 # showus
-* Show a user disk usage in a dir. Calculates by adding file sizes owned by user. 
+* Show a user disk usage AND file count in a dir. Calculates by adding file sizes owned by user. 
+* It uses kibibytes (1KiB = 1024 Bytes). It may show slightly different results from ls. Not sure why. I think that ls might round results after dividing. This script doesn't. 
 ![gen usage](./img/showus_use.gif)
 
 
