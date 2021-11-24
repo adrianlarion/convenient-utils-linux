@@ -122,7 +122,7 @@ while getopts ":u:d:kshCF" opts; do
 			echo "-${OPTARG} requires an argument" >&2; exit 1
 			;;
 		*)
-			help; exit 0
+			help; exit 1
 			;;
 
 

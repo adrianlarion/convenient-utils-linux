@@ -21,7 +21,7 @@ write_temp_file(){
 }
 dir=
 while [[ -n $1 ]]; do 
-	case $1 in 
+	case "$1" in 
 		-d | --dir) shift 
 			dir=$1
 			;;

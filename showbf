@@ -1,0 +1,72 @@
+#!/bin/bash
+# Originally written by Adrian 'Scheff' Larion
+# Show big files
+# It's somewhat slow due to calling du for every file (in order to deal correctly with files that have spaces or other funky chars)
+num_reg='^[0-9]+$'
+
+usage(){
+	echo "
+	ABOUT: show biggest files in dir for user. 
+
+	USAGE: ${0##*/} [-d <dirname>] [-u <username>]  [-n <number_of_results>] 
+
+	OPTIONS:
+	-d directory. Defaults to .
+	-u user for whom the files belong. Defaults to current user.
+	-n number of files to display in reverse order (from biggest to smallest). Defaults to 10
+
+	EXAMPLE: 
+
+	${0##*/} #show 10 biggest files in current dir for current user
+	${0##*/} -d ~ -u sshd -n20 # show 20 biggest files in dir ~ for user sshd
+
+	"
+}
+
+
+user_exists(){
+	grep "^${1}:" /etc/passwd 1>/dev/null && return 0
+	return 1
+}
+
+
+# process opts
+while getopts ":d:u:n:" opts; do 
+	case "${opts}" in 
+		n)
+			n=${OPTARG}
+			#check num
+			if ! [[ $n =~ $num_reg ]]; then echo "'$n' is not a number" >&2; exit 1; fi
+			;;
+		d)
+			d=${OPTARG}
+			if ! [ -d "$d" ] ; then  echo "'$d' is not a dir or not exists " >&2 ; exit 1 ; fi
+			;;
+		u)
+			u=${OPTARG}
+			user_exists "$u" || ( echo "User '$u' doesn't exist" >&2  ; exit 1 )
+
+			;;
+		:)
+			echo "'${OPTARG} requires an argument" >&2; exit 1
+			;;
+		*)
+			usage; exit 1
+			;;
+
+	esac
+
+done
+
+# Defaults
+if [ -z "$n" ] ; then n=10; fi
+if [ -z "$d" ] ; then d=$(pwd); fi
+if ! [[ "$d" =~ */ ]]; then d=$d/; fi
+if [ -z "$u" ] ; then u=$(whoami); fi
+
+find "$d" -type f -user "$u" -printf '%s %p\n'  | sort -nr | head -n"$n"
+
+
+exit 0
+
+
