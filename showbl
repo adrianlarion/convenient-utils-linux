@@ -1,0 +1,55 @@
+#!/bin/bash
+# Find all broken symbolic links
+# Works for broken links containing: spaces, colons, etc. 
+usage(){
+	echo -e "USAGE: ${0##*/} [-d|--dir <dirname>]\n"
+	echo -e "ABOUT: Show broken links. Works for files containing spaces, colons and probably  newlines too, although not tested fully\n"
+	echo "NOTE: 
+	In order to perform further actions upon links use xargs wih delimiter being a newline:
+	${0##*/} -d mydir | xargs -n1 -d'\n' ls
+	"
+		
+
+}
+clean_temp(){
+if [ -e $temp_file ]; then rm "$temp_file"; fi
+}
+write_temp_file(){
+	if [ -n "$1" ]; then
+		cat "$1" | xargs -0 file -0 > "$temp_file"
+	fi
+}
+dir=
+while [[ -n $1 ]]; do 
+	case $1 in 
+		-d | --dir) shift 
+			dir=$1
+			;;
+		*) usage >&2
+			exit 1
+			;;
+	esac
+	shift
+done
+# defaults
+if [ -z $dir ]; then dir=.; fi
+# fix dir
+if [[ "$dir" == '.' ]]; then dir=$(pwd); fi
+if ! [[ "$dir" =~ .*/$ ]]; then dir="$dir"/ ; fi
+# The work
+# Use temp file otherwise hard to deal with spaces, newlines, colons, etc
+
+temp_file=$(mktemp)
+all_res=$(find "$dir" -type l  -print0 2>/dev/null  | xargs -0 file -0 2>/dev/null > "$temp_file" )
+# cat $temp_file | egrep '.* broken symbolic link to' | cut -f1 -d ''
+
+broken_lines_num=$(cat $temp_file| cut -d '' -f2 | grep -n '.* broken symbolic link to' | cut -f1 -d: )
+for line_num in $broken_lines_num; do sed -n -e "${line_num}p" $temp_file; done | cut -f1 -d '' 
+
+clean_temp
+
+#rm temp
+
+
+
+
