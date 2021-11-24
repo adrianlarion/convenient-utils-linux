@@ -10,7 +10,7 @@ A series of utilities to show various info on Linux systems.
 2. Remove the added line to .bashrc
 
 # General Presentation
-![gen usage]("https://github.com/adrianscheff/show-utils-linux/blob/master/img/gen_use.gif")
+![gen usage](./img/gen_use.gif)
 
 # showbf
 * show big files. First 10 by default, current user, current dir. 
@@ -36,7 +36,6 @@ A series of utilities to show various info on Linux systems.
 
 # wtw
 * What's the word? A simple one liner (in script) to show possible words for regex.
-![wtw usage]("https://github.com/adrianscheff/show-utils-linux/blob/master/img/wtw_use.gif")
 
 
 
