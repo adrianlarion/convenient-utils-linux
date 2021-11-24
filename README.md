@@ -3,11 +3,37 @@ A series of utilities that make life easier on linux.
 
 # Install
 1. Clone the dir somewhere on your pc.
-2. Add the dir path to .bashrc.
+```
+if ! [ -d ~/scripts ] ; then mkdir -p ~/scripts ; fi
+cd ~/scripts
+git clone https://github.com/adrianscheff/show-utils-linux
+```
+2. Add the dir path to .bashrc (or your terminal startup config file)
+```
+echo 'export PATH="~/scripts/show-utils-linux:$PATH"' >> ~/.bashrc
+```
+3. Reload your terminal.
+```
+source ~/.bashrc
+```
 
 # Uninstall
 1. Delete the dir where the downloaded files are.
-2. Remove the added line to .bashrc
+```
+rm ~/scripts/show-utils-linux -r
+```
+2. Remove the added line to .bashrc. It should be something like
+```
+export PATH="~/scripts/show-utils-linux:$PATH"
+```
+
+# Use
+* Just call the desired utility. The 'show' family start with the keyword 'show' and continue with something relevant.
+* For example to show users type 'showu'. [show][u] - show users, alright?
+* showg - showgroup. showp - showpath. showbf - showbigfiles. showus - show user space. etc
+
+
+
 
 # General Presentation
 ![gen usage](./img/gen_use.gif)
