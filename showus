@@ -159,8 +159,13 @@ fi
 create_du_exe 
 #clean on sudden exit
 trap "rm \"$tmp_du_exe\" ; exit 1" SIGINT SIGTERM
-# Do the work
-find_res=$(find "$d" -user "$u" -type f -print0 2>/dev/null |  xargs --null -n1 $tmp_du_exe | cut -f1 | awk 'BEGIN {totalkb=0; totalfiles=0} !/^$/{totalkb+=$1; totalfiles+=1} END {printf "%s %s",totalkb, totalfiles}' )
+
+# OLD IMPLEMENTATION
+# find_res=$(find "$d" -user "$u" -type f -print0 2>/dev/null |  xargs --null -n1 $tmp_du_exe | cut -f1 | awk 'BEGIN {totalkb=0; totalfiles=0} !/^$/{totalkb+=$1; totalfiles+=1} END {printf "%s %s",totalkb, totalfiles}' )
+
+# Faster implementation
+find_res=$(find "$d" -type f  -user "$u" -ls  2>/dev/null | awk 'BEGIN {file_size=0; file_count=0} {file_size+=$2; file_count+=1} END {print file_size, file_count}')
+
 totalkb=$(echo "$find_res" | cut -f1 -d' ')
 totalfiles=$(echo "$find_res" | cut -f2 -d' ')
 # Remove temp file
