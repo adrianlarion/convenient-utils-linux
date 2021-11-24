@@ -32,11 +32,9 @@ export PATH="~/scripts/convenient-utils-linux:$PATH"
 * For example to show users type 'showu'. [show][u] - show users, alright?
 * showg - showgroup. showp - showpath. showbf - showbigfiles. showus - show user space. etc
 * Here's a favourite one liner. Show total file size & count for every user in the root dir. 
-<br>
 ```
 for u in $(showu); do showus -u $u -d / ; done
 ```
-<br>
 ![show2 usage](./img/showus2.gif)
 
 
