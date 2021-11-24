@@ -45,6 +45,7 @@ export PATH="~/scripts/show-utils-linux:$PATH"
 
 # showus
 * Show a user disk usage in a dir. Calculates by adding file sizes owned by user. 
+![gen usage](./img/showus_use.gif)
 
 
 # showbl
